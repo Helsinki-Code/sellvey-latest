@@ -1,0 +1,160 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique identifier of the user" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A sales lead",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "company": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "status": { "type": "string", "enum": ["new", "contacted", "qualified", "proposal", "won", "lost"] },
+        "value": { "type": "number" },
+        "probability": { "type": "string", "enum": ["low", "mid", "high"] },
+        "ownerId": { "type": "string", "description": "The UID of the user who owns this lead" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "status", "ownerId"]
+    },
+    "ChatSession": {
+      "title": "Chat Session",
+      "description": "A chat session with an AI agent",
+      "type": "object",
+      "properties": {
+        "agentId": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["agentId", "userId"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message within a chat session",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "model"] },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sessionId", "role", "content", "createdAt"]
+    },
+    "Agent": {
+      "title": "Agent",
+      "description": "An AI sales agent",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "status": { "type": "string", "enum": ["online", "away", "offline"] },
+        "avatar": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name", "role", "status"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "A calendar event",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["title", "date", "ownerId"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A task in the Kanban board",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "column": { "type": "string", "enum": ["backlog", "todo", "doing", "done"] },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["title", "column", "ownerId"]
+    },
+    "TimelineItem": {
+      "title": "Timeline Item",
+      "description": "An item in the orbital timeline",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "in-progress", "pending"] },
+        "energy": { "type": "number" },
+        "relatedIds": { "type": "array", "items": { "type": "number" } }
+      },
+      "required": ["title", "date", "status"]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "User feedback or support request",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string", "format": "email" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles"
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/Lead" },
+      "description": "Stores sales leads"
+    },
+    "/chatSessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/ChatSession" },
+      "description": "Stores chat sessions"
+    },
+    "/chatSessions/{sessionId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Stores messages for a specific chat session"
+    },
+    "/agents/{agentId}": {
+      "schema": { "$ref": "#/entities/Agent" },
+      "description": "Stores AI agent profiles"
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "#/entities/Event" },
+      "description": "Stores calendar events"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Stores Kanban tasks"
+    },
+    "/timeline/{itemId}": {
+      "schema": { "$ref": "#/entities/TimelineItem" },
+      "description": "Stores timeline items"
+    },
+    "/feedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Stores user feedback"
+    }
+  }
+}

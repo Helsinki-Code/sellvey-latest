@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-radius: var(--radius);
+}
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 220 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 10%;
+    --primary: 220 10% 10%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 220 10% 10%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 20% 96%;
+    --accent-foreground: 220 10% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 220 10% 10%;
+    --radius: 0.5rem;
+    
+    /* Liquid Metal Light Theme */
+    --liquid-bg: linear-gradient(135deg, #e0e5ec 0%, #ffffff 50%, #e0e5ec 100%);
+    --liquid-shadow: 20px 20px 60px #bec3c9, -20px -20px 60px #ffffff;
+    --liquid-border: rgba(255, 255, 255, 0.5);
+    --ethereal-glow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.05);
+    --ethereal-text: rgba(0, 0, 0, 0.8);
+  }
+
+  .dark {
+    --background: 220 10% 4%;
+    --foreground: 210 20% 98%;
+    --card: 220 10% 6%;
+    --card-foreground: 210 20% 98%;
+    --popover: 220 10% 6%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 20% 98%;
+    --primary-foreground: 220 10% 10%;
+    --secondary: 215 15% 12%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 15% 12%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 215 15% 12%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 15% 15%;
+    --input: 215 15% 15%;
+    --ring: 210 20% 98%;
+    
+    /* Liquid Metal Dark Theme */
+    --liquid-bg: linear-gradient(135deg, #0f1115 0%, #1a1d24 50%, #0f1115 100%);
+    --liquid-shadow: 20px 20px 60px #0a0b0e, -20px -20px 60px #14171c;
+    --liquid-border: rgba(255, 255, 255, 0.05);
+    --ethereal-glow: 0 0 15px rgba(255, 255, 255, 0.15), 0 0 30px rgba(255, 255, 255, 0.1);
+    --ethereal-text: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: var(--liquid-bg);
+    background-attachment: fixed;
+    transition: background 0.5s ease-in-out;
+  }
+}
+
+/* Liquid Metal & Ethereal Projection Utilities */
+.liquid-panel {
+  background: rgba(var(--background), 0.4);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--liquid-border);
+  box-shadow: var(--liquid-shadow);
+  transition: all 0.3s ease;
+}
+
+.liquid-panel:hover {
+  box-shadow: var(--ethereal-glow);
+}
+
+.ethereal-text {
+  color: var(--ethereal-text);
+  text-shadow: var(--ethereal-glow);
+  letter-spacing: 0.05em;
+}
+
+.ethereal-image {
+  filter: drop-shadow(0 0 10px rgba(var(--primary), 0.5)) contrast(1.2) brightness(1.1);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  transition: all 0.5s ease;
+}
+
+.dark .ethereal-image {
+  mix-blend-mode: lighten;
+}
+
+.ethereal-image:hover {
+  filter: drop-shadow(0 0 20px rgba(var(--primary), 0.8)) contrast(1.3) brightness(1.2);
+  opacity: 1;
+}
+
+/* Custom Scrollbar for Liquid Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.5);
+}
